@@ -10,15 +10,43 @@ class TestSuite:
         self.tests = int(kwargs.get('tests', 0))
         self.time = float(kwargs.get('', 0.0))
 
+    @property
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'time': self.time
+        }
+
 
 class TestCase:
     def __init__(self, **kwargs):
         self.name = kwargs.get('name')
         self.classname = kwargs.get('classname')
         self.file = kwargs.get('file')
+        self.line = kwargs.get('line')
         self.time = kwargs.get('time')
+        self.latest_pass = kwargs.get('latest_pass')
+
+        # TODO get message "./failure/@message"
+        self.message = kwargs.get('message')
+        self.trace = kwargs.get('trace')
 
         self.line = kwargs.get('line')
         if self.line is not None:
             self.line = int(self.line)
 
+    @property
+    def did_fail(self):
+        return self.message is not None
+
+    @property
+    def to_dict(self):
+        return {
+            'name': self.name,
+            'file': self.file,
+            'classname': self.classname,
+            'line': self.line,
+            'time': self.time,
+            'message': self.message,
+            'trace': self.trace,
+        }

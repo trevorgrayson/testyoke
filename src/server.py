@@ -1,42 +1,43 @@
-#
-# flask server for receiving data. statsd server?
-#
-import os
-from datetime import datetime
-from models.test_run import TestRun
+from flask import Flask, request, Response
+import json
+import api
+from formats.xml import junit
 
-HISTORY_FILE = os.environ.get("HOME", '')
+app = Flask(__name__)
 
-# need this for every test, or read from file.
-STATS = {
-    'runs', 0,
-    'fails', 0,
-    'last_pass': '0 minutes',
-    'failures': []
+CONTENT_TYPES = {
+    'application/xml+junit': junit
 }
 
+def get_parser(content_type):
+    return CONTENT_TYPES.get(content_type, junit)
 
-def receive_run(test):
-    # receive one test at a time?
-    pass
+def headers():
+    return {
+        "Content-Type": "application/json"
+    }
 
-def receive_batch(tests):
-    failures = []
-    with open(HISTORY_FILE, 'a') as fp:
-        fp.write(str(tests)+"\n")
+@app.route('/projects/<string:project>/reports', methods=['POST'])
+def receive_report(project):
+    suites = get_parser(request.headers['content-type']).parse(request.get_data())
+    sha = request.headers.get('vc-sha').strip()
 
-        for test in tests:
-            test = TestRun(**test)
-            STATS['runs'] = STATS['runs'] + 1
+    api.receive_report(suites, project, sha)
 
-            if test.did_fail:
-                failures.append(test)
-                STATS['fails'] = STATS['fails'] + 1
-       
-    if not failures:
-        STATS['last_pass'] = datetime.now()
+    return "", 201
 
-    STATS['failures'] = failures
 
-def get_stats():
-    return STATS
+@app.route('/projects/<string:project>')
+def stats_project(project):
+    return Response(json.dumps(api.get_stats(project)), headers=headers())
+
+
+@app.route('/projects/<string:project>/<string:suite>/<string:test>')
+def stats_test(project, suite, test):
+    case = api.get_stats(project).get(suite).get(test)
+    return Response(json.dumps(case), headers=headers())
+
+
+@app.route('/')
+def welcome():
+    return 'testharness <a href="/projects/aproj/stats">aproj</a>'
