@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?><testsuite errors="0" failures="1" name="pytest" skipped="0" tests="1" time="0.026"><testcase classname="test.test_junit.TestJunit" file="test/test_junit.py" line="7" name="test_read" time="0.001"><failure message="Exception: None">self = &lt;test_junit.TestJunit instance at 0x7f02100e7cf8&gt;
+
+    def test_read(self):
+        xml = parser.parse(JUNIT_FIXTURE)
+    
+&gt;       raise Exception(xml)
+E       Exception: None
+
+test/test_junit.py:11: Exception</failure></testcase></testsuite>

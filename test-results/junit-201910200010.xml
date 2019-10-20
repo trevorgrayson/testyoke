@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuite errors="0" failures="0" name="pytest" skipped="0" tests="1" time="0.014"><testcase classname="test.test_junit.TestJunit" file="test/test_junit.py" line="7" name="test_read" time="0.001"></testcase></testsuite>
