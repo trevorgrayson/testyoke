@@ -32,6 +32,12 @@ def stats_project(project):
     return Response(json.dumps(api.get_stats(project)), headers=headers())
 
 
+@app.route('/projects/<string:project>/<string:suite>')
+def stats_suite(project, suite):
+    case = api.get_stats(project).get(suite)
+    return Response(json.dumps(case), headers=headers())
+
+
 @app.route('/projects/<string:project>/<string:suite>/<string:test>')
 def stats_test(project, suite, test):
     case = api.get_stats(project).get(suite).get(test)

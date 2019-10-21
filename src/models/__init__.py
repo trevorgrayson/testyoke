@@ -36,6 +36,10 @@ class TestCase:
             self.line = int(self.line)
 
     @property
+    def ident(self):
+        return self.name.lower().replace(" ", "_")
+
+    @property
     def did_fail(self):
         return self.message is not None
 
@@ -49,4 +53,40 @@ class TestCase:
             'time': self.time,
             'message': self.message,
             'trace': self.trace,
+        }
+
+
+class TestReport:
+    def __init__(self, **kwargs):
+        self.subject = kwargs.get('case')
+        self.cases = kwargs.get('cases')
+        self.passes = kwargs.get('passes')  # number
+        self.fails = kwargs.get('fails')  # list of failures. compare exceptions?
+        self.latest = kwargs.get('latest')
+
+    @property
+    def to_dict(self):
+        return {}
+
+    @property
+    def pass_rate(self):
+        fails = float(len(self.fails))
+        passes = float(self.passes)
+
+        return (passes-fails)/passes
+
+    
+    # def is_bullshit
+    # def is_recurring
+    # def is_flaky
+
+    # def depends_on_service
+
+    def to_dict(self):
+        return {
+            'pass_rate': self.pass_rate,
+            # 'latest': {
+            #     'timestamp': self.latest.timestamp,
+            #     'sha': self.latest.sha
+            # }
         }
