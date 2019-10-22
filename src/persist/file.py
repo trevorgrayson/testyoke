@@ -6,7 +6,7 @@ from models import TestSuite, TestCase
 
 
 HISTORY_FILE = os.path.join(
-    os.environ.get("HOME", ''), '.test-harness/'
+    os.environ.get("HOME", ''), '.testyoke/'
 )
 
 def history_file(project):
