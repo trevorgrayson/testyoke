@@ -16,5 +16,5 @@ def receive_report(suites, project=None, sha=None):
     return True
 
        
-def get_stats(project):
-    return persist.load(project)
+def get_stats(project, **options):
+    return persist.load(project, **options)

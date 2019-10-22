@@ -29,21 +29,28 @@ def receive_report(project):
 
 @app.route('/projects/<string:project>')
 def stats_project(project):
-    return Response(json.dumps(api.get_stats(project)), headers=headers())
+    return Response(json.dumps(api.get_stats(project, **params())), headers=headers())
 
 
 @app.route('/projects/<string:project>/<string:suite>')
 def stats_suite(project, suite):
-    case = api.get_stats(project).get(suite)
+    case = api.get_stats(project, **params()).get(suite)
     return Response(json.dumps(case), headers=headers())
 
 
 @app.route('/projects/<string:project>/<string:suite>/<string:test>')
 def stats_test(project, suite, test):
-    case = api.get_stats(project).get(suite).get(test)
+    case = api.get_stats(project, **params()).get(suite).get(test)
     return Response(json.dumps(case), headers=headers())
 
 
 @app.route('/')
 def welcome():
     return 'testharness <a href="/projects/aproj/stats">aproj</a>'
+
+
+def params():
+    return {
+        'flaky': request.args.get('flaky') is not None
+    }
+

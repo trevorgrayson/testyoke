@@ -26,6 +26,7 @@ class TestCase:
         self.line = kwargs.get('line')
         self.time = kwargs.get('time')
         self.latest_pass = kwargs.get('latest_pass')
+        self.sha = kwargs.get('sha')
 
         # TODO get message "./failure/@message"
         self.message = kwargs.get('message')
