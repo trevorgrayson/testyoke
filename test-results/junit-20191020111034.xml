@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites>
+<testsuite errors="0" failures="1" hostname="prometheus" name="pytest" skipped="0" tests="6" time="0.098" timestamp="2019-10-20T11:00:34.711389">
+<testcase classname="test.test_api.TestApi" file="test/test_api.py" line="5" name="test_receives_report" time="0.000"></testcase>
+<testcase classname="test.test_api.TestApi" file="test/test_api.py" line="13" name="test_get_stats" time="0.000"></testcase>
+<testcase classname="test.test_file.TestFile" file="test/test_file.py" line="6" name="test_saves_and_retrieves" time="0.000"></testcase>
+<testcase classname="test.test_junit.TestJunit" file="test/test_junit.py" line="7" name="test_read" time="0.001">
+  <failure message="AttributeError: &apos;xml.etree.ElementTree.Element&apos; object has no attribute &apos;getroot&apos;">self = &lt;test_junit.TestJunit object at 0x7efe14649da0&gt;
+
+    def test_read(self):
+        # TODO missing &lt;testsuites&gt;
+        xml = open(JUNIT_FIXTURE, &apos;r&apos;).read()
+&gt;       suites = parser.parse(xml)
+
+test/test_junit.py:11: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+filename = &apos;&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;\n&lt;testsuite errors=&quot;0&quot; \nfailures=&quot;0&quot; name=&quot;pytest&quot; skipped=&quot;0&quot; tests=&quot;11&quot; tim...pers&quot; file=&quot;tests/telemetry/wrappers_test.py&quot; line=&quot;17&quot; name=&quot;test_constants&quot; time=&quot;0.001&quot;&gt;&lt;/testcase&gt;\n&lt;/testsuite&gt;\n&apos;
+
+    def parse(filename):
+        &quot;&quot;&quot; parses junit.xml, ALWAYS returns suites &quot;&quot;&quot;
+        xml = ET.fromstring(filename)
+    
+        suites = []
+&gt;       root = xml.getroot()
+E       AttributeError: &apos;xml.etree.ElementTree.Element&apos; object has no attribute &apos;getroot&apos;
+
+src/formats/xml/junit.py:9: AttributeError</failure></testcase>
+<testcase classname="test.test_server.TestServer" file="test/test_server.py" line="4" name="test_get_parser_junit" time="0.000"></testcase><testcase classname="test.test_server.TestServer" file="test/test_server.py" line="10" name="test_get_parser_default" time="0.000"></testcase></testsuite></testsuites>
