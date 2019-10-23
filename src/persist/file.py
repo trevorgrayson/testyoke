@@ -9,16 +9,33 @@ HISTORY_FILE = os.path.join(
     os.environ.get("HOME", ''), '.testyoke/'
 )
 
-def history_file(project):
-    return HISTORY_FILE + project
+RESULTS_FILE = 'results'
+
+
+def history_file(project, filename):
+    # TODO """ clean up dir concat """
+    return HISTORY_FILE + project + "/" + filename
+
+def bootstrap(project):
+    # TODO check if dir exists
+    try:
+        if not os.path.exists(HISTORY_FILE):
+            os.mkdir(HISTORY_FILE)
+        if not os.path.exists(HISTORY_FILE + project):
+            os.mkdir(HISTORY_FILE + project)
+
+        results = history_file(project, RESULTS_FILE)
+        if not os.path.exists(results):
+            open(results, 'w').write('')
+
+    except FileExistsError as err:
+        raise Exception("Error creating info dir %s" % str(err)) 
+        pass
+
 
 def save(suites, project="default", sha=None):
-    try:
-        os.mkdir(HISTORY_FILE)
-    except FileExistsError:
-        pass
-    # mkdir -p
-    with open(history_file(project), 'a') as fp:
+    bootstrap(project)
+    with open(history_file(project, RESULTS_FILE), 'a') as fp:
         for suite in suites:
             for case in suite.cases:
                 to_write = case.to_dict
@@ -33,7 +50,8 @@ def save(suites, project="default", sha=None):
                 fp.write(dumps(to_write) + "\n")
 
 def all_load(project):
-    with open(history_file(project), 'r') as fp:
+    bootstrap(project)
+    with open(history_file(project, RESULTS_FILE), 'r') as fp:
         for line in fp:
             data = loads(line)
             request = data['request']

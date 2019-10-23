@@ -36,6 +36,9 @@ class TestCase:
         if self.line is not None:
             self.line = int(self.line)
 
+        self.is_flaky = kwargs.get('flaky')
+        self.is_regressive = kwargs.get('regressive')
+
     @property
     def ident(self):
         return self.name.lower().replace(" ", "_")
