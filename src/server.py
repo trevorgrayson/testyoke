@@ -19,8 +19,8 @@ def headers():
 
 @app.route('/projects/<string:project>/reports', methods=['POST'])
 def receive_report(project):
-    suites = get_parser(request.headers['content-type']).parse(request.get_data())
     sha = request.headers.get('vc-sha').strip()
+    suites = get_parser(request.headers['content-type']).parse(request.get_data(), sha=sha)
 
     api.receive_report(suites, project, sha)
 
@@ -42,6 +42,22 @@ def stats_suite(project, suite):
 def stats_test(project, suite, test):
     case = api.get_stats(project, **params()).get(suite).get(test)
     return Response(json.dumps(case), headers=headers())
+
+
+@app.route('/projects/<string:project>/shas') 
+def get_shas(project):
+    """ missing project """
+    return Response(json.dumps(api.get_shas()), headers=headers())
+
+
+@app.route('/projects/<string:project>/shas/<string:sha>') 
+def get_sha(project, sha):
+    """ missing project """
+    sha = api.get_sha(sha)
+
+    # TODO GARBAGE
+    response = sha.to_dict if sha is not None else {'message': 'Not Found'}
+    return Response(json.dumps(response), headers=headers())
 
 
 @app.route('/')

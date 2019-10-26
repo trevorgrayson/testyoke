@@ -65,3 +65,7 @@ GET /projects/<project:str>/suites/<suite:str>/tests/<test_name:str>
 
 ```
 
+## Arch
+
+API -> persist
+       analyzers

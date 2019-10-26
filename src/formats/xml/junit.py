@@ -1,7 +1,7 @@
 import xml.etree.ElementTree as ET
 from models import TestSuite, TestCase
 
-def parse(filename):
+def parse(filename, **options):
     """ parses junit.xml, ALWAYS returns suites """
     root = ET.fromstring(filename)
 
@@ -15,6 +15,7 @@ def parse(filename):
 
         for testcase in suite_xml:
             case = TestCase(**testcase.attrib)
+            case.sha = options.get('sha')
 
             failure = testcase.find('failure')
             case.message = failure

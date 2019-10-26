@@ -94,3 +94,18 @@ class TestReport:
             #     'sha': self.latest.sha
             # }
         }
+
+
+class ProjectState:
+    def __init__(self, **kwargs):
+        self.sha = kwargs.get('sha')
+        self.status = kwargs.get('status')
+        # self.passes = kwargs.get('passes')
+        # self.fails = kwargs.get('fails')
+
+    @property
+    def to_dict(self):
+        return {
+            'sha': self.sha,
+            'status': self.status
+        }

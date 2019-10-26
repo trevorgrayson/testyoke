@@ -3,28 +3,42 @@
 #
 #
 from collections import defaultdict
+from models import ProjectState
 
-SHAS = defaultdict(dict)
 
 PASS, FAIL = 'pass', 'fail'
 
+class Analyzer:
+    def __init__(self):
+        self.shas = defaultdict(dict)
 
-def register(case, suite, **options):
-    status = FAIL if case.did_fail else PASS
-    SHAS[case.sha][status] = True
+    def analyze(self, case, suite=None, **options):
+        status = FAIL if case.did_fail else PASS
+        if not self.shas[case.sha].get(status):
+            self.shas[case.sha][status] = 0
 
-    if status == FAIL:
-        failures = SHAS[case.sha].get('failures')
-        # if failures is None:
+        self.shas[case.sha][status] += 1
 
+    def all(self):
+        return self.shas
 
+    def get(self, sha):
+        """
+        given `sha`
 
-def get_sha(sha):
-    """
-    given `sha`
+        does it pass? has it ever failed?
+        flaky?
+        """
+        sha = self.shas.get(sha)
 
-    does it pass? has it ever failed?
-    flaky?
-    """
-    return SHAS[sha].get('fail'):
+        if sha is None:
+            return sha
+
+        return ProjectState(
+            sha=sha,
+            status='fail' if sha.get(FAIL, 0) > 0 else 'pass'
+        )
+
+    # def save(self):
+    # def load(class):
 

@@ -8,7 +8,7 @@ export PYTHONPATH = src:$(PYDEPS)
 
 NOW:=$(shell date +%Y%m%d%H%m%S)
 JUNIT_XML:=test-results/junit-$(NOW).xml 
-GIT_SHA:=$(shell git rev-parse HEAD)$(shell [ -z "`git diff HEAD`" ] || echo "-dirty") 
+GIT_SHA:=$(shell git rev-parse HEAD)$(shell [ -z "`git diff HEAD`" ] || echo "-dirty")
 
 test: compile
 	mkdir -p $(PYDEPS)
@@ -21,7 +21,7 @@ $(PYDEPS): requirements.txt
 	touch $(PYDEPS)
 
 server: compile
-	flask run
+	$(PYTHON) -m flask run
 
 clean:
 	rm -rf $(PYDEPS)

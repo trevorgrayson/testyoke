@@ -22,8 +22,11 @@
 # expect this dir to break down into parts
 # TESTS
 #
+from analytics.sha import Analyzer as ShaAnalyzer
 
-AGGREGATE = {} # by test_id
+ANALYZERS = {
+    'sha': ShaAnalyzer()
+}
 
 
 def analyze_test(case, suite, **options):
@@ -39,10 +42,23 @@ def analyze_test(case, suite, **options):
     mark_flaky(case, suite, **options)
     mark_regressive(case, suite, **options)
 
+    for k, analyzer in ANALYZERS.items():
+        analyzer.analyze(case, suite, **options)
+        
     # if all_tests_pass: 
     #    save(sha, passed_shas)
     # else:
     # defect-shas
+
+
+def get_sha(sha):
+    """ shouldn't live here. """
+    return ANALYZERS['sha'].get(sha)
+
+
+def get_shas():
+    """ shouldn't live here. """
+    return ANALYZERS['sha'].all()
 
 
 def mark_flaky(case, suite, **options):
@@ -63,5 +79,5 @@ def mark_regressive(case, suite, **options):
         case.is_regressive = True
 
 
-def mark(case, cases, fn):
-    """ takes test case, and it's relatives, and a lambda to make a decision """
+# def mark(case, cases, fn):
+#    """ takes test case, and it's relatives, and a lambda to make a decision """
