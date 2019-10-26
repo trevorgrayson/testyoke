@@ -15,6 +15,13 @@
 #
 # can get stream of cases from service or persist
 # TODO need to pull stuff out of persist.file
+#
+#
+# Need CQRS pattern. can warm up from disk, or not,
+# depends on the analysis' needs.
+# expect this dir to break down into parts
+# TESTS
+#
 
 AGGREGATE = {} # by test_id
 
