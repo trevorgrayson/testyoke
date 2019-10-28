@@ -32,6 +32,6 @@ post:
 	curl -H "vc-sha: $(GIT_SHA)" -H "Content-Type: application/xml+junit" -X POST -d "@$(FILE)" http://$(HOSTNAME):$(FLASK_RUN_PORT)/projects/testharness/reports
 
 status:
-	curl -H "Content-Type: application/xml+junit" http://$(HOSTNAME):$(FLASK_RUN_PORT)/projects/testharness/shas/$(GIT_SHA)
-	echo ""
+	@curl -H "Content-Type: application/xml+junit" http://$(HOSTNAME):$(FLASK_RUN_PORT)/projects/testharness/shas/$(GIT_SHA)
+	@echo ""
 	
