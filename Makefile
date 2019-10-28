@@ -4,6 +4,7 @@ PYDEPS:=venv
 
 export FLASK_APP = src/server.py
 export FLASK_RUN_PORT = 7357
+export HOSTNAME = localhost
 export PYTHONPATH = src:$(PYDEPS)
 
 NOW:=$(shell date +%Y%m%d%H%m%S)
@@ -13,7 +14,7 @@ GIT_SHA:=$(shell git rev-parse HEAD)$(shell [ -z "`git diff HEAD`" ] || echo "-d
 test: compile
 	mkdir -p $(PYDEPS)
 	$(PYTHON) -s -m pytest --junitxml $(JUNIT_XML) || echo "with failures"
-	curl -H "vc-sha: $(GIT_SHA)" -H "Content-Type: application/xml+junit" -X POST -d @$(JUNIT_XML) http://localhost:$(FLASK_RUN_PORT)/projects/testharness/reports
+	curl -H "vc-sha: $(GIT_SHA)" -H "Content-Type: application/xml+junit" -X POST -d @$(JUNIT_XML) http://$(HOSTNAME):$(FLASK_RUN_PORT)/projects/testharness/reports
 
 compile: $(PYDEPS)
 $(PYDEPS): requirements.txt
@@ -28,5 +29,9 @@ clean:
 	find . -name *.pyc -delete
 
 post: 
-	curl -H "vc-sha: $(GIT_SHA)" -H "Content-Type: application/xml+junit" -X POST -d "@$(FILE)" http://localhost:$(FLASK_RUN_PORT)/projects/testharness/reports
+	curl -H "vc-sha: $(GIT_SHA)" -H "Content-Type: application/xml+junit" -X POST -d "@$(FILE)" http://$(HOSTNAME):$(FLASK_RUN_PORT)/projects/testharness/reports
 
+status:
+	curl -H "Content-Type: application/xml+junit" http://$(HOSTNAME):$(FLASK_RUN_PORT)/projects/testharness/shas/$(GIT_SHA)
+	echo ""
+	
