@@ -11,8 +11,10 @@ PASS, FAIL = 'pass', 'fail'
 class Analyzer:
     def __init__(self):
         self.shas = defaultdict(dict)
+        self.real_shas = defaultdict(ProjectState)
 
     def analyze(self, case, suite=None, **options):
+        # this should not be counting all tests.
         status = FAIL if case.did_fail else PASS
         if not self.shas[case.sha].get(status):
             self.shas[case.sha][status] = 0
@@ -29,15 +31,14 @@ class Analyzer:
         does it pass? has it ever failed?
         flaky?
         """
-        sha = self.shas.get(sha)
+        state = self.shas.get(sha, {})
 
-        if sha is None:
-            return sha
+        if state is None:
+            return None
 
-        return ProjectState(
-            sha=sha,
-            status='fail' if sha.get(FAIL, 0) > 0 else 'pass'
-        )
+        state = ProjectState(**{**state, **{'sha': sha}})
+
+        return state
 
     # def save(self):
     # def load(class):

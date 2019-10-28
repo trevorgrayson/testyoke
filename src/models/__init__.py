@@ -1,3 +1,5 @@
+PASS, FAIL = 'pass', 'fail'
+
 class TestSuite:
     def __init__(self, **kwargs):
         self.name = kwargs.get('name')
@@ -99,13 +101,22 @@ class TestReport:
 class ProjectState:
     def __init__(self, **kwargs):
         self.sha = kwargs.get('sha')
-        self.status = kwargs.get('status')
-        # self.passes = kwargs.get('passes')
-        # self.fails = kwargs.get('fails')
+        # self.status = kwargs.get('status')
+        self.passes = kwargs.get('passes', kwargs.get(PASS, 0))
+        self.fails = kwargs.get(FAIL, 0)
+
+        self.has_failed = self.fails > 0
+
+    @property
+    def flaky(self):
+        return self.passes > 0 and self.fails > 0
 
     @property
     def to_dict(self):
         return {
             'sha': self.sha,
-            'status': self.status
+            'passes': self.passes,
+            'fails': self.fails,
+            'has_failed': self.has_failed
         }
+

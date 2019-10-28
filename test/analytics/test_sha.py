@@ -23,6 +23,6 @@ class TestSha:
         passer = sha.get(PASS_SHA)
         failer = sha.get(FAIL_SHA)
 
-        assert passer.status == PASS
-        assert failer.status == FAIL
+        assert passer.has_failed == False
+        assert failer.has_failed == True
     
