@@ -105,7 +105,7 @@ class ProjectState:
         self.passes = kwargs.get('passes', kwargs.get(PASS, 0))
         self.fails = kwargs.get(FAIL, 0)
 
-        self.has_failed = self.fails > 0
+        self.failed = self.fails > 0
 
     @property
     def flaky(self):
@@ -117,6 +117,6 @@ class ProjectState:
             'sha': self.sha,
             'passes': self.passes,
             'fails': self.fails,
-            'has_failed': self.has_failed
+            'failed': self.failed
         }
 

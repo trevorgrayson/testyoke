@@ -8,7 +8,7 @@ class TestModels:
             fails=0
         )
 
-        assert state.has_failed == False
+        assert state.failed == False
 
     def test_project_state_has_failed(self):
         state = ProjectState(
@@ -16,7 +16,7 @@ class TestModels:
             fail=1
         )
 
-        assert state.has_failed == True
+        assert state.failed == True
 
     def test_project_state_is_flaky(self):
         state = ProjectState(
