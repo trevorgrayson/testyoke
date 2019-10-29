@@ -3,11 +3,14 @@
 Provide insights on the outcomes of software test cases.
 
 This project will provide resources to log the results of your test suites and aims
-to add useful insight to your testing. Tests are seen as gold, and how do you prune
-invalid, ineffective, or plain inaccurate test cases?
+to add useful insights to your testing. Tests are seen as gold, but how do you prune
+invalid, ineffective, or plain inaccurate test cases? With TestYoke you can:
 
-The HTTP service (which is only available for you to run locally at present) in this project
-can run in the background and receive results of your test running, however you run them.
+* See previous test results of the version control SHA you're working on, saving valuable time waiting while retesting.
+* See the past preformance of individual test cases to determine flakiness or common regressions.
+
+The HTTP service in this project can run in the background and receive results of 
+your test running, however you run them.
 
 The service presently accepts junit xml, and there is a good chance your testing framework 
 can export that format.  Try setting up posting the results of your tests after every run
@@ -16,7 +19,12 @@ of the suite via your build process.
 
 ## getting started
 
-1. Run the service, check out the `service` command in this project's `Makefile`
+1. Run the service.
+
+```
+make server
+```
+
 2. Everytime you run a test, `POST` the result to the service.
   - i.o.u docker
 
@@ -62,6 +70,13 @@ GET /projects/<project:str>
 GET /projects/<project:str>/suites/<suite:str>
 
 GET /projects/<project:str>/suites/<suite:str>/tests/<test_name:str>
+
+```
+
+### Version Control SHAS
+
+```HTTP
+GET /projects/<project:str>/shas/<sha:str>
 
 ```
 
