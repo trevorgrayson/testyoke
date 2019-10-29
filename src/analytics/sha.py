@@ -25,19 +25,13 @@ class Analyzer:
         return self.shas
 
     def get(self, sha):
-        """
-        given `sha`
-
-        does it pass? has it ever failed?
-        flaky?
-        """
+        """ given `sha` """
         state = self.shas.get(sha, {})
 
         if state is None:
             return None
 
         state = ProjectState(**{**state, **{'sha': sha}})
-
         return state
 
     # def save(self):
