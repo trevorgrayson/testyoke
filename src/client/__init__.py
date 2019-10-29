@@ -14,7 +14,6 @@ class Client:
         self.conn.request("GET", "/projects/%s/shas/%s" % (self.project, sha))
         res = self.conn.getresponse()
 
-        
         if res.status == 200:
             data = json.loads(res.read())
             return ProjectState(**data)
@@ -24,4 +23,16 @@ class Client:
     # def case(self, case):
     # def report(self):
         
+    def post(self, report):
+        headers = {
+            'Content-Type': 'application/xml+junit'
+        }
+        body =""
+        self.conn.request("POST", "/projects/%s/reports" % self.project, body, {}, headers)
+        res = self.conn.getresponse()
+
+        if res.status in [200, 201]:
+            return True
+        else:
+            raise ClientException("%s: %s" % (res.status, res.reason))
 

@@ -16,6 +16,7 @@ def history_file(project, filename):
     # TODO """ clean up dir concat """
     return HISTORY_FILE + project + "/" + filename
 
+
 def bootstrap(project):
     # TODO check if dir exists
     try:
