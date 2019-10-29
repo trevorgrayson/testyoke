@@ -36,6 +36,7 @@ post:
 	curl -H "vc-sha: $(GIT_SHA)" -H "Content-Type: application/xml+junit" -X POST -d "@$(FILE)" http://$(HOSTNAME):$(FLASK_RUN_PORT)/projects/testharness/reports
 
 status:
+	# @python3 -m client SHA=d9f8ed85a40435f325fed3ad3022f9000b37fbda-dirty 
 	@curl http://$(HOSTNAME):$(FLASK_RUN_PORT)/projects/testharness/shas/$(GIT_SHA)
 	@echo ""
 	

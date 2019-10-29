@@ -1,4 +1,5 @@
 PASS, FAIL = 'pass', 'fail'
+TESTS_NAME = 'tests'
 
 class TestSuite:
     def __init__(self, **kwargs):
@@ -102,8 +103,10 @@ class ProjectState:
     def __init__(self, **kwargs):
         self.sha = kwargs.get('sha')
         # self.status = kwargs.get('status')
-        self.passes = kwargs.get('passes', kwargs.get(PASS, 0))
-        self.fails = kwargs.get(FAIL, 0)
+        self.passes = kwargs.get('passes', kwargs.get(PASS, 
+            kwargs.get(TESTS_NAME, {}).get('passes', 0)))
+        self.fails = kwargs.get('fails', kwargs.get(FAIL, 
+            kwargs.get(TESTS_NAME, {}).get('fails', 0)))
 
         self.failed = self.fails > 0
 
@@ -137,7 +140,7 @@ class ProjectState:
     def to_dict(self):
         return {
             'sha': self.sha, 
-            'tests': {
+            TESTS_NAME: {
                 'passes': self.passes,
                 'fails': self.fails
             },
@@ -145,3 +148,7 @@ class ProjectState:
             'nature': self.classification
         }
 
+    def __repr__(self):
+        return "nature: %s.  fails %s, passes %s" % (
+            self.classification, self.fails, self.passes
+        )
