@@ -76,4 +76,3 @@ def get_sha(project, sha):
 def welcome():
     return 'testharness <a href="/projects/aproj/stats">aproj</a>'
 
-

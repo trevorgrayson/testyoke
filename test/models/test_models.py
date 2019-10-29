@@ -32,5 +32,5 @@ class TestProjectState:
         )
 
         assert state.flaky == True
-        assert state.to_dict['flaky'] == True
+        assert state.to_dict['nature'] == 'flaky'
 

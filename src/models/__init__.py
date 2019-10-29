@@ -108,8 +108,30 @@ class ProjectState:
         self.failed = self.fails > 0
 
     @property
+    def clean(self):
+        """ Has never failed """
+        return self.passes > 0 and self.fails == 0
+
+    @property
     def flaky(self):
+        """ Has both passed and failed """
         return self.passes > 0 and self.fails > 0
+
+    @property
+    def broken(self):
+        """ Only failed """
+        return self.passes == 0 and self.fails > 0
+
+    @property
+    def classification(self):
+        if self.clean:
+            return 'clean'
+        elif self.flaky:
+            return 'flaky'
+        elif self.broken:
+            return 'broken'
+        else:
+            return 'untested'
 
     @property
     def to_dict(self):
@@ -120,6 +142,6 @@ class ProjectState:
                 'fails': self.fails
             },
             'failed': self.failed,
-            'flaky': self.flaky
+            'nature': self.classification
         }
 

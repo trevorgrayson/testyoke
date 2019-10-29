@@ -27,3 +27,4 @@ def get_sha(sha):
 
 def get_shas():
     return analytics.get_shas()
+
