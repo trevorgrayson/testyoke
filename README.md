@@ -6,8 +6,10 @@ This project will provide resources to log the results of your test suites and a
 to add useful insights to your testing. Tests are seen as gold, but how do you prune
 invalid, ineffective, or plain inaccurate test cases? With TestYoke you can:
 
-* See previous test results of the version control SHA you're working on, saving valuable time waiting while retesting.
-* See the past preformance of individual test cases to determine flakiness or common regressions.
+* See the results of tests on this git sha previously. Big time savings here, by not running again.
+* Flaky Tests - have both passed and failed on the present sha. There probably is a data or service dependency issue.
+* Bad Tests - tests that have been failing across consecutive shas.  If these have been deployed anyways, these tests are worthless.  Prompt user to delete because they are costing the staff more than a good test is worth.
+* Regressions - tests that failed, were fixed, and fail again in different shas.  Regressions are recurring issues. They may prompt priority to fix.
 
 The HTTP service in this project can run in the background and receive results of 
 your test running, however you run them.
@@ -60,10 +62,9 @@ You can submit via curl/HTTP Post via the following:
 
 
 ```HTTP
-POST /projects/{your-project}/reports
+POST /projects/<project:str>/reports
 Content-Type: application/xml+junit
-vc-sha: "GIT, or other VC sha (optional, but recommended) "
-
+vc-sha: "GIT, or other VC sha (optional, but recommended)"
 
 GET /projects/<project:str>
 

@@ -17,6 +17,12 @@ def headers():
         "Content-Type": "application/json"
     }
 
+def params():
+    return {
+        'flaky': request.args.get('flaky') is not None
+    }
+
+
 @app.route('/projects/<string:project>/reports', methods=['POST'])
 def receive_report(project):
     sha = request.headers.get('vc-sha').strip()
@@ -43,6 +49,9 @@ def stats_test(project, suite, test):
     case = api.get_stats(project, **params()).get(suite).get(test)
     return Response(json.dumps(case), headers=headers())
 
+#
+# VC SHAS
+#
 
 @app.route('/projects/<string:project>/shas') 
 def get_shas(project):
@@ -59,14 +68,12 @@ def get_sha(project, sha):
     response = sha.to_dict if sha is not None else {'message': 'Not Found'}
     return Response(json.dumps(response), headers=headers())
 
+#
+# welcome
+#
 
 @app.route('/')
 def welcome():
     return 'testharness <a href="/projects/aproj/stats">aproj</a>'
 
-
-def params():
-    return {
-        'flaky': request.args.get('flaky') is not None
-    }
 

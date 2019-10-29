@@ -114,9 +114,12 @@ class ProjectState:
     @property
     def to_dict(self):
         return {
-            'sha': self.sha,
-            'passes': self.passes,
-            'fails': self.fails,
-            'failed': self.failed
+            'sha': self.sha, 
+            'tests': {
+                'passes': self.passes,
+                'fails': self.fails
+            },
+            'failed': self.failed,
+            'flaky': self.flaky
         }
 

@@ -1,7 +1,7 @@
 from models import ProjectState
 
 
-class TestModels:
+class TestProjectState:
     def test_project_state(self):
         state = ProjectState(
             passes=0,
@@ -16,7 +16,14 @@ class TestModels:
             fail=1
         )
 
+        assert state.passes == 0
+        assert state.fails == 1
         assert state.failed == True
+
+        d = state.to_dict
+        assert d['tests']['passes'] == 0
+        assert d['tests']['fails'] == 1
+        assert d['failed'] == True
 
     def test_project_state_is_flaky(self):
         state = ProjectState(
@@ -25,4 +32,5 @@ class TestModels:
         )
 
         assert state.flaky == True
+        assert state.to_dict['flaky'] == True
 

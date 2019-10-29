@@ -11,7 +11,7 @@ NOW:=$(shell date +%Y%m%d%H%m%S)
 JUNIT_XML:=test-results/junit-$(NOW).xml 
 GIT_SHA:=$(shell git rev-parse HEAD)$(shell [ -z "`git diff HEAD`" ] || echo "-dirty")
 
-test: compile
+test: status compile
 	mkdir -p $(PYDEPS)
 	$(PYTHON) -s -m pytest --junitxml $(JUNIT_XML) || echo "with failures"
 	curl -H "vc-sha: $(GIT_SHA)" -H "Content-Type: application/xml+junit" -X POST -d @$(JUNIT_XML) http://$(HOSTNAME):$(FLASK_RUN_PORT)/projects/testharness/reports
@@ -28,10 +28,14 @@ clean:
 	rm -rf $(PYDEPS)
 	find . -name *.pyc -delete
 
+#
+# move following into cli client
+#
+
 post: 
 	curl -H "vc-sha: $(GIT_SHA)" -H "Content-Type: application/xml+junit" -X POST -d "@$(FILE)" http://$(HOSTNAME):$(FLASK_RUN_PORT)/projects/testharness/reports
 
 status:
-	@curl -H "Content-Type: application/xml+junit" http://$(HOSTNAME):$(FLASK_RUN_PORT)/projects/testharness/shas/$(GIT_SHA)
+	@curl http://$(HOSTNAME):$(FLASK_RUN_PORT)/projects/testharness/shas/$(GIT_SHA)
 	@echo ""
 	
