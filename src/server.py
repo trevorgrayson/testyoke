@@ -56,13 +56,13 @@ def stats_test(project, suite, test):
 @app.route('/projects/<string:project>/shas') 
 def get_shas(project):
     """ missing project """
-    return Response(json.dumps(api.get_shas()), headers=headers())
+    return Response(json.dumps(api.get_shas(project)), headers=headers())
 
 
 @app.route('/projects/<string:project>/shas/<string:sha>') 
 def get_sha(project, sha):
     """ missing project """
-    sha = api.get_sha(sha)
+    sha = api.get_sha(project, sha)
 
     # TODO GARBAGE
     response = sha.to_dict if sha is not None else {'message': 'Not Found'}

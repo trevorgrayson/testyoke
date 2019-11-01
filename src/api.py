@@ -31,13 +31,12 @@ def get_stats(project, **options):
     return persist.load(project, **options)
 
 
-def get_sha(sha):
+def get_sha(project, sha):
+    on_load('testharness')  # this will eventually have to be cached
     return analytics.get_sha(sha)
 
 
-def get_shas():
+def get_shas(project):
+    on_load('testharness') 
     return analytics.get_shas()
 
-# TODO load all projects? 
-# need to load on request?
-on_load('testharness') 

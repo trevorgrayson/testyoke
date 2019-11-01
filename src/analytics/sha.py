@@ -8,7 +8,7 @@ from models import ProjectState
 
 PASS, FAIL = 'pass', 'fail'
 
-class Analyzer:
+class Analyzer: # inherits from GenericAnalyzer
     def __init__(self):
         self.shas = defaultdict(dict)
         self.real_shas = defaultdict(ProjectState)
@@ -33,6 +33,10 @@ class Analyzer:
 
         state = ProjectState(**{**state, **{'sha': sha}})
         return state
+
+    @property
+    def has_sha(self, sha):
+        return self.shas.get(sha) is not None
 
     # def save(self):
     # def load(class):
