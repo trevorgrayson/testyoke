@@ -44,7 +44,35 @@ You can submit via curl/HTTP Post via the following:
 
 ```
   curl -H "vc-sha: $(GIT_SHA)" -H "Content-Type: application/xml+junit" -X POST -d @$(JUNIT_XML) http://localhost:$(FLASK_RUN_PORT)/projects/{your-project}/reports
+	@python3 -m client
 ```
+
+## Analytics
+
+Run this before your tests.
+
+```
+  python3 -m client SHA=`git rev-parse HEAD`
+```
+
+Example output:
+
+```
+###################################################
+#
+# nature: untested.  fails 0, passes 0
+#
+###################################################
+```
+
+### Nature
+
+This is a classification of the SHA you are running on.
+
+* untested - testyoke hasn't seen results from this SHA yet
+* clean - testyoke has never seen a failure on this SHA
+* broken - this SHA has never passed completely.
+* flaky - there is at least one flaky test, defined as having passed and failed on the same SHA.
 
 ## Projects
 
