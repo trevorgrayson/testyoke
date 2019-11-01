@@ -10,4 +10,8 @@ sha = environ.get('SHA')
 
 if sha is not None:
     sha = client.sha(sha)
-    print(repr(sha))
+    print("###################################################")
+    print("#")
+    print(f"# {repr(sha)}")
+    print("#")
+    print("###################################################")
