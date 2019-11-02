@@ -29,11 +29,9 @@ install:
 	$(PYTHON) setup.py sdist bdist_wheel
 	$(PYTHON) -m pip install --no-deps testyoke # --index-url https://test.pypi.org/simple/ 
 
-
-
-
 clean:
 	rm -rf $(PYDEPS)
+	rm -rf build dist
 	find . -name *.pyc -delete
 
 #

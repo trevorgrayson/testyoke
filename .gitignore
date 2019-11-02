@@ -2,3 +2,6 @@
 *.sw*
 venv
 test-results/*
+build
+dist
+testyoke.egg-info
