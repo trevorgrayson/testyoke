@@ -23,11 +23,16 @@ class Client:
     # def case(self, case):
     # def report(self):
         
-    def post(self, body):
+    def post(self, body, sha=None):
         headers = {
-            'Content-Type': 'application/xml+junit'
+            'Content-Type': 'application/xml+junit',
+            'vc-sha': sha
         }
-        self.conn.request("POST", "/projects/%s/reports" % self.project, body, headers)
+        self.conn.request(
+            "POST", 
+            "/projects/%s/reports" % self.project, body, 
+            headers
+        )
         res = self.conn.getresponse()
 
         if res.status in [200, 201]:

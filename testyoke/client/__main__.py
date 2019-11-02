@@ -15,7 +15,7 @@ if __name__ == '__main__':
 
     opts, args = parser.parse_args()
 
-    if (not opts.project and not opts.report) or (opts.project and opts.report):
+    if (not opts.project and not opts.report):
         parser.print_help()
         exit(0)
 
@@ -34,5 +34,5 @@ if __name__ == '__main__':
         print(f"sending {opts.report}")
         with open(opts.report, 'r') as f:
             report = f.read()
-            client.post(report)
+            client.post(report, sha=opts.sha)
             
