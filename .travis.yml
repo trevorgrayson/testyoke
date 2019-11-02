@@ -5,3 +5,5 @@ install:
 - make compile
 script:
 - make travis-test
+- make package
+- make publish

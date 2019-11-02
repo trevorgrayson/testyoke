@@ -39,10 +39,10 @@ in the space. It is supported by [pytest](https://docs.pytest.org/en/latest/), [
 and obviously in java frameworks as well.  This is the first format to be supported, but 
 more formats are expected to be supported soon.
 
-You can submit via curl/HTTP Post via the following (**Run this after your tests run**):
+You can submit via curl/HTTP Post via the [client](./CLIENT.md), or by curls (**Run this after your tests run**):
 
 ```
-  curl -H "vc-sha: $(SHA)" -H "Content-Type: application/xml+junit" -X POST -d @$(JUNIT_XML) http://localhost:7357/projects/testharness/reports
+  curl -H "vc-sha: $(SHA)" -H "Content-Type: application/xml+junit" -X POST -d @target/path/to/JUNIT.xml http://localhost:7357/projects/testharness/reports
 ```
 
 Get reports by:

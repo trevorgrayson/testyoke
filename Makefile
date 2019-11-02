@@ -34,9 +34,9 @@ package:
 	$(PYTHON) setup.py sdist bdist_wheel
 
 publish:
-	$(PYTHON) -m twine upload dist/*
 	git tag "$(VERSION_NEW)"
 	git push --tags
+	$(PYTHON) -m twine upload dist/*
 
 clean:
 	rm -rf $(PYDEPS)
