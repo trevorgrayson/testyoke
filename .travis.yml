@@ -4,4 +4,4 @@ python:
 install:
 - make compile
 script:
-- make test
+- make travis-test
