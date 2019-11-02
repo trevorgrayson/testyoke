@@ -15,20 +15,22 @@ if __name__ == '__main__':
 
     opts, args = parser.parse_args()
 
-    if (not opts.project and not opts.report):
+    if not opts.project or (not opts.sha and not opts.report):
         parser.print_help()
         exit(0)
 
     client = Client(opts.project)
 
-    if opts.sha:
+    if opts.sha and not opts.report:  # should this return after report uploaded?
         sha = client.sha(opts.sha)
 
+        print()
         print("###################################################")
-        print("#")
-        print(f"# {repr(sha)}")
-        print("#")
+        print("#                                                 #")
+        print(f"# {repr(sha)}                                     ")
+        print("#                                                 #")
         print("###################################################")
+        print()
 
     if opts.report:
         print(f"sending {opts.report}")

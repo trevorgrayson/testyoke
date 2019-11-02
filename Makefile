@@ -14,7 +14,7 @@ export SHA =$(shell git rev-parse HEAD)$(shell [ -z "`git diff HEAD`" ] || echo 
 test: status compile
 	mkdir -p $(PYDEPS)
 	$(PYTHON) -s -m pytest --junitxml $(JUNIT_XML) || echo "with failures"
-	curl -H "vc-sha: $(SHA)" -H "Content-Type: application/xml+junit" -X POST -d @$(JUNIT_XML) http://$(HOSTNAME):$(FLASK_RUN_PORT)/projects/testharness/reports
+	$(PYTHON) -m testyoke.client --project=testyoke --sha=$(SHA) --report=$(JUNIT_XML)
 
 compile: $(PYDEPS)
 $(PYDEPS): requirements.txt
@@ -42,6 +42,6 @@ post:
 	curl -H "vc-sha: $(SHA)" -H "Content-Type: application/xml+junit" -X POST -d "@$(FILE)" http://$(HOSTNAME):$(FLASK_RUN_PORT)/projects/testharness/reports
 
 status:
-	@python3 -m testyoke.client
+	@$(PYTHON) -m testyoke.client --project=testyoke --sha=$(SHA)
 	@echo ""
 	

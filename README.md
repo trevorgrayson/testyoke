@@ -21,34 +21,37 @@ of the suite via your build process.
 
 ## getting started
 
-1. Run the service.
+1. Run the service. Default port is 7357, but you may set it with the `YOKE_PORT` env var.
 
 ```
-make server
+python3 -m testyoke.server YOKE_PORT=7357
 ```
 
 2. Everytime you run a test, `POST` the result to the service.
-  - i.o.u docker
 
-## `POST` formats
-
-Ultimately data will be collected by either testing frameworks' reporters, or by submitting reports after
-tests complete.  This process must be automatic, and not be a manual submission.
-
-### junit xml
-
-One of the more prevalent formats in the space, supported by [pytest](https://docs.pytest.org/en/latest/), [scalatest](), 
-and obviously in java framworks as well.  This is a supported.
-
-You can submit via curl/HTTP Post via the following:
+More formats are expected to be supported soon.
 
 ```
   python -m testyoke.client --sha=`git rev-parse HEAD` --report=junit.xml
 ```
 
+### `POST` formats
+
+Ultimately data will be collected by either testing frameworks' reporters, or by submitting reports after
+tests complete.  This process must be automatic, and not be a manual submission.
+
+#### junit xml
+
+JUNIT.xml is one of the more prevalent formats in the space, supported by [pytest](https://docs.pytest.org/en/latest/), [scalatest](), 
+and obviously in java frameworks as well.  This is the first format to be supported.
+
+You can submit via curl/HTTP Post via the following (**Run this after your tests run**):
+
 ## Analytics
 
-Run this before your tests.
+**Run this before your tests run.**
+
+This will provide you with historical information, and if this SHA has been proven.
 
 ```
   python -m testyoke.client --sha=`git rev-parse HEAD`
@@ -68,14 +71,14 @@ Example output:
 
 This is a classification of the SHA you are running on.
 
-* untested - testyoke hasn't seen results from this SHA yet
-* clean - testyoke has never seen a failure on this SHA
-* broken - this SHA has never passed completely.
-* flaky - there is at least one flaky test, defined as having passed and failed on the same SHA.
+* `untested` - testyoke hasn't seen results from this SHA yet
+* `clean` - testyoke has never seen a failure on this SHA
+* `broken` - this SHA has never passed completely.
+* `flaky` - there is at least one flaky test, defined as having passed and failed on the same SHA.
 
-## Projects
+## Components
 
-- web service
+- [HTTP service](./SERVER.md)
 - reporters
   - scalatest
   - pytest
@@ -83,30 +86,6 @@ This is a classification of the SHA you are running on.
 - cli client
 - analytics
 - web portal
-
-
-### [web service](http://c.es/testharness/service)
-
-
-```HTTP
-POST /projects/<project:str>/reports
-Content-Type: application/xml+junit
-vc-sha: "GIT, or other VC sha (optional, but recommended)"
-
-GET /projects/<project:str>
-
-GET /projects/<project:str>/suites/<suite:str>
-
-GET /projects/<project:str>/suites/<suite:str>/tests/<test_name:str>
-
-```
-
-### Version Control SHAS
-
-```HTTP
-GET /projects/<project:str>/shas/<sha:str>
-
-```
 
 ## Arch
 
