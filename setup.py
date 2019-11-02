@@ -5,7 +5,7 @@ with open('README.md', 'r') as f:
 
 setuptools.setup(
     name='testyoke',
-    version='0.0.2',
+    version='0.0.3',
     author='trevor grayson',
     author_email='trevor@ipsumllc.com',
     description='Provide insights on the outcomes of software test cases.',

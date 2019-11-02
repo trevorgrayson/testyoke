@@ -24,10 +24,8 @@ $(PYDEPS): requirements.txt
 server: compile
 	$(PYTHON) -m flask run
 
-install:
-	# python3 -m pip install --user --upgrade setuptools wheel
+package:
 	$(PYTHON) setup.py sdist bdist_wheel
-	$(PYTHON) -m pip install --no-deps testyoke # --index-url https://test.pypi.org/simple/ 
 
 clean:
 	rm -rf $(PYDEPS)
