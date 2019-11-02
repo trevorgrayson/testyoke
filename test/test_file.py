@@ -1,5 +1,5 @@
-from models import TestSuite, TestCase
-from persist import file as persist
+from testyoke.models import TestSuite, TestCase
+from testyoke.persist import file as persist
 
 
 class TestFile:

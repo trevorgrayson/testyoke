@@ -1,6 +1,6 @@
 import json
 from http.client import HTTPConnection
-from models import ProjectState
+from testyoke.models import ProjectState
 
 class ClientException(Exception): pass
 

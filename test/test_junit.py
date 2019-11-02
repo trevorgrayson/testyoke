@@ -1,4 +1,4 @@
-from formats.xml import junit as parser
+from testyoke.formats.xml import junit as parser
 
 
 JUNIT_FIXTURE = 'test/fixtures/junit.xml'

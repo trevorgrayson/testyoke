@@ -3,7 +3,7 @@
 #
 #
 from collections import defaultdict
-from models import ProjectState
+from testyoke.models import ProjectState
 
 
 PASS, FAIL = 'pass', 'fail'

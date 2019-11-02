@@ -3,8 +3,8 @@
 #
 import os
 from datetime import datetime
-from persist import file as persist
-import analytics
+from testyoke.persist import file as persist
+import testyoke.analytics
 
 
 def analyze(project, case, suite):

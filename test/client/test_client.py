@@ -1,4 +1,4 @@
-from client import Client
+from testyoke.client import Client
 
 PROJ = 'some-proj'
 HOSTNAME = 'https://phoenixfoundation.org'

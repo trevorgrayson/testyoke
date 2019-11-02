@@ -1,7 +1,8 @@
-from flask import Flask, request, Response
 import json
-import api
-from formats.xml import junit
+from flask import Flask, request, Response
+from testyoke.formats.xml import junit
+
+import testyoke.api
 
 app = Flask(__name__)
 

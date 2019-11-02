@@ -1,4 +1,4 @@
-from server import get_parser
+from testyoke.server import get_parser
 
 
 class TestServer:

@@ -2,10 +2,10 @@ PROJECT:=testharness
 PYTHON?=python3
 PYDEPS:=venv
 
-export FLASK_APP = src/server.py
+export FLASK_APP = testyoke/server/__init__.py
 export FLASK_RUN_PORT = 7357
 export HOSTNAME = localhost
-export PYTHONPATH = src:$(PYDEPS)
+export PYTHONPATH = .:$(PYDEPS)
 
 NOW:=$(shell date +%Y%m%d%H%m%S)
 JUNIT_XML:=test-results/junit-$(NOW).xml 
@@ -24,6 +24,14 @@ $(PYDEPS): requirements.txt
 server: compile
 	$(PYTHON) -m flask run
 
+install:
+	# python3 -m pip install --user --upgrade setuptools wheel
+	$(PYTHON) setup.py sdist bdist_wheel
+	$(PYTHON) -m pip install --no-deps testyoke # --index-url https://test.pypi.org/simple/ 
+
+
+
+
 clean:
 	rm -rf $(PYDEPS)
 	find . -name *.pyc -delete
@@ -36,6 +44,6 @@ post:
 	curl -H "vc-sha: $(SHA)" -H "Content-Type: application/xml+junit" -X POST -d "@$(FILE)" http://$(HOSTNAME):$(FLASK_RUN_PORT)/projects/testharness/reports
 
 status:
-	@python3 -m client
+	@python3 -m testyoke.client
 	@echo ""
 	

@@ -1,7 +1,7 @@
 from pytest import fixture
 
-from models import TestCase, ProjectState
-from analytics.sha import Analyzer, PASS, FAIL
+from testyoke.models import TestCase, ProjectState
+from testyoke.analytics.sha import Analyzer, PASS, FAIL
 
 PASS_SHA = "12e45"
 FAIL_SHA = "54e21"

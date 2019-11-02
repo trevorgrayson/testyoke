@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as ET
-from models import TestSuite, TestCase
+from testyoke.models import TestSuite, TestCase
 
 def parse(filename, **options):
     """ parses junit.xml, ALWAYS returns suites """

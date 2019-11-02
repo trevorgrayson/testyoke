@@ -2,7 +2,8 @@ import os
 from json import dumps, loads
 from datetime import datetime
 from collections import defaultdict
-from models import TestSuite, TestCase
+
+from testyoke.models import TestSuite, TestCase
 
 
 HISTORY_FILE = os.path.join(

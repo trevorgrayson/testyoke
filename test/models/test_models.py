@@ -1,4 +1,4 @@
-from models import ProjectState
+from testyoke.models import ProjectState
 
 
 class TestProjectState:

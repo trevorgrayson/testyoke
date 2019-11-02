@@ -1,5 +1,5 @@
-import api
-from models import TestSuite, TestCase
+from testyoke import api
+from testyoke.models import TestSuite, TestCase
 
 PROJECT = 'default'
 

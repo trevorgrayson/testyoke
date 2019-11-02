@@ -22,7 +22,7 @@
 # expect this dir to break down into parts
 # TESTS
 #
-from analytics.sha import Analyzer as ShaAnalyzer
+from .sha import Analyzer as ShaAnalyzer
 
 ANALYZERS = {
     'sha': ShaAnalyzer()
