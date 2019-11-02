@@ -21,37 +21,41 @@ of the suite via your build process.
 
 ## getting started
 
-1. Run the service. Default port is 7357, but you may set it with the `YOKE_PORT` env var.
+1. Run the [service](./SERVER.md). Default port is 7357, but you may set it with the `YOKE_PORT` env var.
 
 ```
 python3 -m testyoke.server YOKE_PORT=7357
 ```
 
-2. Everytime you run a test, `POST` the result to the service.
+2. Everytime you run a test, `POST` the results using the [client](./CLIENT.md).
 
-More formats are expected to be supported soon.
 
 ```
   python -m testyoke.client --sha=`git rev-parse HEAD` --report=junit.xml
 ```
 
-### `POST` formats
-
-Ultimately data will be collected by either testing frameworks' reporters, or by submitting reports after
-tests complete.  This process must be automatic, and not be a manual submission.
-
-#### junit xml
-
-JUNIT.xml is one of the more prevalent formats in the space, supported by [pytest](https://docs.pytest.org/en/latest/), [scalatest](), 
-and obviously in java frameworks as well.  This is the first format to be supported.
+`junit.xml` is presently the de facto format, as it is one of the more prevalent formats 
+in the space. It is supported by [pytest](https://docs.pytest.org/en/latest/), [scalatest](), 
+and obviously in java frameworks as well.  This is the first format to be supported, but 
+more formats are expected to be supported soon.
 
 You can submit via curl/HTTP Post via the following (**Run this after your tests run**):
+
+```
+  curl -H "vc-sha: $(SHA)" -H "Content-Type: application/xml+junit" -X POST -d @$(JUNIT_XML) http://localhost:7357/projects/testharness/reports
+```
+
+Get reports by:
+
+```
+  curl http://localhost:7357/projects/testharness/shas/$(GIT_SHA)
+```
 
 ## Analytics
 
 **Run this before your tests run.**
 
-This will provide you with historical information, and if this SHA has been proven.
+This will provide you with historical information. If the SHA has previously been proven, it will be reported it as `clean`.
 
 ```
   python -m testyoke.client --sha=`git rev-parse HEAD`
