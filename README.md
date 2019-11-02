@@ -43,8 +43,7 @@ and obviously in java framworks as well.  This is a supported.
 You can submit via curl/HTTP Post via the following:
 
 ```
-  curl -H "vc-sha: $(GIT_SHA)" -H "Content-Type: application/xml+junit" -X POST -d @$(JUNIT_XML) http://localhost:$(FLASK_RUN_PORT)/projects/{your-project}/reports
-	@python3 -m client
+  python -m testyoke.client --sha=`git rev-parse HEAD` --report=junit.xml
 ```
 
 ## Analytics
@@ -52,7 +51,7 @@ You can submit via curl/HTTP Post via the following:
 Run this before your tests.
 
 ```
-  python3 -m client SHA=`git rev-parse HEAD`
+  python -m testyoke.client --sha=`git rev-parse HEAD`
 ```
 
 Example output:
