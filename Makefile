@@ -14,7 +14,6 @@ export SHA =$(shell git rev-parse HEAD)$(shell [ -z "`git diff HEAD`" ] || echo 
 travis-test: compile
 	mkdir -p $(PYDEPS)
 	$(PYTHON) -s -m pytest --junitxml $(JUNIT_XML) || echo "with failures"
-	$(PYTHON) -m testyoke.client --project=testyoke --sha=$(SHA) --report=$(JUNIT_XML)
 
 test: status compile
 	mkdir -p $(PYDEPS)
