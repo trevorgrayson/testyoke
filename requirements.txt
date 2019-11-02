@@ -1,3 +1,4 @@
-flask
-pytest
+flask==1.1.1
+pytest==5.2.2
+twine==2.0.0
 # junitparser

@@ -27,6 +27,9 @@ server: compile
 package:
 	$(PYTHON) setup.py sdist bdist_wheel
 
+publish:
+	$(PYTHON) -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+
 clean:
 	rm -rf $(PYDEPS)
 	rm -rf build dist
