@@ -32,13 +32,15 @@ package:
 	$(PYTHON) setup.py sdist bdist_wheel
 
 publish:
-	$(PYTHON) -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+	$(PYTHON) -m twine upload dist/*
 
 clean:
 	rm -rf $(PYDEPS)
 	rm -rf build dist
 	find . -name *.pyc -delete
 
+docker:
+	# push to docker hub
 #
 # move following into cli client
 #
