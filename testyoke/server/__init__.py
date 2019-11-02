@@ -1,8 +1,9 @@
 import json
 from flask import Flask, request, Response
 from testyoke.formats.xml import junit
+from xml.etree.ElementTree import ParseError
 
-import testyoke.api
+from testyoke import api
 
 app = Flask(__name__)
 
@@ -26,8 +27,14 @@ def params():
 
 @app.route('/projects/<string:project>/reports', methods=['POST'])
 def receive_report(project):
-    sha = request.headers.get('vc-sha').strip()
-    suites = get_parser(request.headers['content-type']).parse(request.get_data(), sha=sha)
+    sha = request.headers.get('vc-sha', '').strip()
+
+    try:
+        suites = get_parser(
+            request.headers['content-type']
+        ).parse(request.get_data(), sha=sha)
+    except ParseError:
+        return '{"message": "report not parsable"}', 400
 
     api.receive_report(suites, project, sha)
 

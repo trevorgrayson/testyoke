@@ -4,7 +4,7 @@
 import os
 from datetime import datetime
 from testyoke.persist import file as persist
-import testyoke.analytics
+from testyoke import analytics
 
 
 def analyze(project, case, suite):
