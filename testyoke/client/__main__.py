@@ -1,14 +1,17 @@
 from optparse import OptionParser
-from os import environ
+from os import environ, path
 from glob import glob
 
 from . import Client
 
 
 def post_report(report, sha):
-    with open(report, 'r') as f:
-        report = f.read()
-        client.post(report, sha=sha)
+    if path.isfile(report):
+        with open(report, 'r') as f:
+            report = f.read()
+            client.post(report, sha=sha)
+    else: 
+        print(f"'{report}' is not a file.")
 
             
 if __name__ == '__main__':
