@@ -39,10 +39,11 @@ if __name__ == '__main__':
         print("########################################################")
         print()
 
-    print(f"matching: {opts.report}", end=" ")
 
-    for report_file in glob(opts.report):
-        post_report(report_file, opts.sha)
-        print('', end=".")
+    if opts.report:
+        print(f"matching: {opts.report}", end=" ")
+        for report_file in glob(opts.report):
+            post_report(report_file, opts.sha)
+            print('', end=".")
 
-    print('done.')
+        print('done.')
