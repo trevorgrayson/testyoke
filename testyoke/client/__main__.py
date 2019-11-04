@@ -1,9 +1,16 @@
 from optparse import OptionParser
 from os import environ
+from glob import glob
 
 from . import Client
 
 
+def post_report(report, sha):
+    with open(report, 'r') as f:
+        report = f.read()
+        client.post(report, sha=sha)
+
+            
 if __name__ == '__main__':
     parser = OptionParser()
     parser.add_option("-s", "--sha", dest="sha",
@@ -11,7 +18,7 @@ if __name__ == '__main__':
     parser.add_option("-p", "--project", dest="project",
                   help="name for this project", metavar="PROJECT")
     parser.add_option("-r", "--report", dest="report",
-                  help="test report file to submit", metavar="JUNIT.xml")
+                  help="test report file to submit (Unix globbing*)", metavar="JUNIT.xml")
 
     opts, args = parser.parse_args()
 
@@ -32,9 +39,10 @@ if __name__ == '__main__':
         print("########################################################")
         print()
 
-    if opts.report:
-        print(f"sending {opts.report}")
-        with open(opts.report, 'r') as f:
-            report = f.read()
-            client.post(report, sha=opts.sha)
-            
+    print(f"matching: {opts.report}", end=" ")
+
+    for report_file in glob(opts.report):
+        post_report(report_file, opts.sha)
+        print('', end=".")
+
+    print('done.')
