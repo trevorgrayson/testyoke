@@ -1,6 +1,7 @@
 from optparse import OptionParser
 from os import environ, path
 from glob import glob
+from testyoke.config import TESTYOKE_PROD
 
 from . import Client
 
@@ -22,7 +23,7 @@ if __name__ == '__main__':
                   help="name for this project", metavar="PROJECT")
     parser.add_option("-P", "--port", dest="port", default=7357,
                   help="port of host server", metavar="7357")
-    parser.add_option("-h", "--host", dest="host", default="testyoke.ipsumllc.com",
+    parser.add_option("-H", "--host", dest="host", default=TESTYOKE_PROD,
                   help="hostname of server", metavar="testyoke.ipsumllc.com")
     parser.add_option("-r", "--report", dest="report",
                   help="test report file to submit (Unix globbing*)", metavar="JUNIT.xml")
@@ -33,7 +34,11 @@ if __name__ == '__main__':
         parser.print_help()
         exit(0)
 
-    client = Client(opts.project)
+    port = opts.port
+    if opts.host == TESTYOKE_PROD:
+        port = 80
+
+    client = Client(opts.project, hostname=opts.host, port=port)
 
     if opts.sha and not opts.report:  # should this return after report uploaded?
         sha = client.sha(opts.sha)

@@ -5,7 +5,6 @@ from testyoke.models import ProjectState
 class ClientException(Exception): pass
 
 class Client:
-
     def __init__(self, project, hostname='localhost', port=7357):
         self.conn = HTTPConnection(hostname, port)
         self.project = project
