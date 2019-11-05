@@ -1,3 +1,4 @@
+IMAGE := tgrayson/testyoke
 PROJECT:=testharness
 PYTHON?=python3
 PYDEPS:=venv
@@ -48,6 +49,13 @@ clean:
 	rm -rf $(PYDEPS)
 	rm -rf build dist
 	find . -name *.pyc -delete
+
+image: 
+	docker build -t $(IMAGE) .
+
+imagePush:
+	echo "$(DOCKER_PASS)" | docker login -u "$(DOCKER_USER)" --password-stdin
+	docker push $(IMAGE)
 
 docker:
 	# push to docker hub

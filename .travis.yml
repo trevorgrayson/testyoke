@@ -7,6 +7,8 @@ script:
 - make travis-test
 - make package
 - make publish
+- make image
+- make imagePush
 branches:
   except:
   - /^v\d+\.\d+\.\d+$/
