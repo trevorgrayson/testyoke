@@ -57,9 +57,11 @@ imagePush:
 	echo "$(DOCKER_PASS)" | docker login -u "$(DOCKER_USER)" --password-stdin
 	docker push $(IMAGE)
 
+deploy: test
+	ssh -t amendment.io -X "docker stop testyoke; docker rm testyoke; docker rmi tgrayson/testyoke; docker run --name testyoke -d -v /var/lib/testyoke/:/data -p 7357:7357 --restart always tgrayson/testyoke:latest"
+
 docker:
 	# push to docker hub
-
 
 post: 
 	curl -H "vc-sha: $(SHA)" -H "Content-Type: application/xml+junit" -X POST -d "@$(FILE)" http://$(HOSTNAME):$(FLASK_RUN_PORT)/projects/testharness/reports

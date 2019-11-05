@@ -20,6 +20,10 @@ if __name__ == '__main__':
                   help="retrieve report for provided sha", metavar="VC SHA")
     parser.add_option("-p", "--project", dest="project",
                   help="name for this project", metavar="PROJECT")
+    parser.add_option("-P", "--port", dest="port", default=7357,
+                  help="port of host server", metavar="7357")
+    parser.add_option("-h", "--host", dest="host", default="testyoke.ipsumllc.com",
+                  help="hostname of server", metavar="testyoke.ipsumllc.com")
     parser.add_option("-r", "--report", dest="report",
                   help="test report file to submit (Unix globbing*)", metavar="JUNIT.xml")
 
