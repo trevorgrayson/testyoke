@@ -31,7 +31,8 @@ python3 -m testyoke.server YOKE_PORT=7357
 
 
 ```
-  python -m testyoke.client --sha=`git rev-parse HEAD` --report=junit.xml
+  alias tyokestat="python -m testyoke.client -p ${PWD##*/} -s $(git rev-parse head)$([[ `git diff | wc -l` -gt 0 ]] && echo '-dirty')"
+  alias tyoke="python -m testyoke.client -p ${PWD##*/} -s "$(git rev-parse head)$([[ `git diff | wc
 ```
 
 `junit.xml` is presently the de facto format, as it is one of the more prevalent formats 
