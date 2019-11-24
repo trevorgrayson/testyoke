@@ -72,17 +72,12 @@ class TestReport:
         self.latest = kwargs.get('latest')
 
     @property
-    def to_dict(self):
-        return {}
-
-    @property
     def pass_rate(self):
         fails = float(len(self.fails))
         passes = float(self.passes)
 
         return (passes-fails)/passes
 
-    
     # def is_bullshit
     # def is_recurring
     # def is_flaky

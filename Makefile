@@ -66,4 +66,6 @@ post:
 
 status:
 	@$(PYTHON) -m testyoke.client --project=testyoke --sha=$(SHA)
-	
+
+lint:
+	@$(PYTHON) -m mypy .
