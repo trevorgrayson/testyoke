@@ -3,12 +3,28 @@ python:
 - '3.7'
 install:
 - make compile
-script:
-- make travis-test
-- make package
-- make publish
-- make image
-- make imagePush
+jobs:
+  include:
+    - stage: test
+      script: 
+        - make travis-test
+    - stage: package
+      script:
+        - make package
+    - stage: publish
+      script:
+        - make publish
+      if: branch = master
+    - stage: docker image
+      script:
+        - make image
+      if: branch = master
+    - stage: docker imagePush
+      script:
+        - make imagePush
+      if: branch = master
+
+
 branches:
   except:
   - /^v\d+\.\d+\.\d+$/
