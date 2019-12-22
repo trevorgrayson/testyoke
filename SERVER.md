@@ -24,4 +24,3 @@ Reports on test outcomes by version control SHAs.
 GET /projects/<project:str>/shas/<sha:str>
 
 ```
-
