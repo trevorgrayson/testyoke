@@ -31,11 +31,11 @@ $(PYDEPS): requirements.txt
 server: compile
 	$(PYTHON) -m flask run
 
-package:
+package: compile
 	echo "__version__ = '$(VERSION_NEW)'" > testyoke/version/__init__.py
 	$(PYTHON) setup.py sdist bdist_wheel
 
-publish:
+publish: package
 	openssl aes-256-cbc -k "$(enc_key_password)" -d -md sha256 -a -in travis_key.enc -out travis_key
 	echo "Host github.com" > ~/.ssh/config
 	echo "  IdentityFile travis_key" >> ~/.ssh/config
@@ -51,10 +51,10 @@ clean:
 	rm -rf build dist
 	find . -name *.pyc -delete
 
-image: 
+image: package
 	docker build -t $(IMAGE) .
 
-imagePush:
+imagePush: image
 	echo "$(DOCKER_PASS)" | docker login -u "$(DOCKER_USER)" --password-stdin
 	docker push $(IMAGE)
 
