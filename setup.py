@@ -21,5 +21,8 @@ setuptools.setup(
     classifiers=[
         "Programming Language :: Python :: 3",
     ],
+    entry_points = {
+        'console_scripts': ['testyoke=testyoke.cli:main'],
+    },
     python_requires='>=3.6',
 )
