@@ -1,3 +1,5 @@
+from os import getcwd
+
 CONFIG = '.testyoke'
 
 
