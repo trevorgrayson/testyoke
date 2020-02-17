@@ -11,6 +11,7 @@ XML_ARG = {
     'py.test': '--junitxml',
     'rspec': '--format RspecJunitFormatter  --out'
 }
+FRAMEWORK = environ.get('FRAMEWORK', 'pytest')
 
 def main():
     report = '/tmp/obid'
@@ -32,7 +33,7 @@ def main():
         print("usage: testyoke pytest args")
         exit(1)
 
-    args = args + [XML_ARG['pytest'], report]
+    args = args + [XML_ARG[FRAMEWORK], report]
     subprocess.call(args)
 
     if path.isfile(report):

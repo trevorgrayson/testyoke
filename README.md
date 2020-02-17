@@ -43,6 +43,17 @@ A test suite wrapper is in progress. It presently supports pytest only.
 testyoke pytest
 ```
 
+#### many frameworks
+
+The `testyoke` wrapper supports many testing frameworks. You may
+manually specify the framework you're using by supplying the
+`FRAMEWORK` environment variable.
+
+
+```
+FRAMEWORK=rspec testyoke rspec
+```
+
 ### Run the Service Yourself
 
 1. Run the [service](./SERVER.md). Default port is 7357, but you may set it with the `YOKE_PORT` env var.
