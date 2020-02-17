@@ -1,5 +1,5 @@
 import sys
-from os import path
+from os import path, environ
 import subprocess
 from testyoke import Client, get_config
 from testyoke.cvs import Git
