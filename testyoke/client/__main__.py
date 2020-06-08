@@ -22,6 +22,10 @@ if __name__ == '__main__':
                   help="name for this project", metavar="PROJECT")
     parser.add_option("-r", "--report", dest="report",
                   help="test report file to submit (Unix globbing*)", metavar="JUNIT.xml")
+    parser.add_option("-h", "--host", dest="host",
+                  help="hostname", default="testyoke.com")
+    parser.add_option("-P", "--port", dest="port", type="int",
+                  help="port", default=80)
 
     opts, args = parser.parse_args()
 
@@ -29,7 +33,9 @@ if __name__ == '__main__':
         parser.print_help()
         exit(0)
 
-    client = Client(opts.project)
+    client = Client(opts.project, 
+                    hostname=opts.host, 
+                    port=opts.port)
 
     if opts.sha and not opts.report:  # should this return after report uploaded?
         sha = client.sha(opts.sha)

@@ -6,7 +6,7 @@ class ClientException(Exception): pass
 
 class Client:
 
-    def __init__(self, project, hostname='localhost', port=7357):
+    def __init__(self, project, hostname='testyoke.com', port=80):
         self.conn = HTTPConnection(hostname, port)
         self.project = project
 
